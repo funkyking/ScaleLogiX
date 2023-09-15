@@ -1,0 +1,25 @@
+c:\users\admin\documents\visual studio 2015\Projects\AMKOR_Weight_Measurement\AMKOR_Weight_Measurement\bin\Debug\AMKOR_Weight_Measurement.exe.config
+c:\users\admin\documents\visual studio 2015\Projects\AMKOR_Weight_Measurement\AMKOR_Weight_Measurement\bin\Debug\AMKOR_Weight_Measurement.exe
+c:\users\admin\documents\visual studio 2015\Projects\AMKOR_Weight_Measurement\AMKOR_Weight_Measurement\bin\Debug\AMKOR_Weight_Measurement.pdb
+c:\users\admin\documents\visual studio 2015\Projects\AMKOR_Weight_Measurement\AMKOR_Weight_Measurement\bin\Debug\AMKOR_Weight_Measurement.xml
+c:\users\admin\documents\visual studio 2015\Projects\AMKOR_Weight_Measurement\AMKOR_Weight_Measurement\obj\Debug\AMKOR_Weight_Measurement.Form1.resources
+c:\users\admin\documents\visual studio 2015\Projects\AMKOR_Weight_Measurement\AMKOR_Weight_Measurement\obj\Debug\AMKOR_Weight_Measurement.Resources.resources
+c:\users\admin\documents\visual studio 2015\Projects\AMKOR_Weight_Measurement\AMKOR_Weight_Measurement\obj\Debug\AMKOR_Weight_Measurement.vbproj.GenerateResource.Cache
+c:\users\admin\documents\visual studio 2015\Projects\AMKOR_Weight_Measurement\AMKOR_Weight_Measurement\obj\Debug\AMKOR_Weight_Measurement.exe
+c:\users\admin\documents\visual studio 2015\Projects\AMKOR_Weight_Measurement\AMKOR_Weight_Measurement\obj\Debug\AMKOR_Weight_Measurement.xml
+c:\users\admin\documents\visual studio 2015\Projects\AMKOR_Weight_Measurement\AMKOR_Weight_Measurement\obj\Debug\AMKOR_Weight_Measurement.pdb
+C:\Users\Admin\Desktop\Paul Projects\Template-Matching---OpenCv\AMKOR_Weight_Measurement\AMKOR_Weight_Measurement\bin\Debug\AMKOR_Weight_Measurement.exe.config
+C:\Users\Admin\Desktop\Paul Projects\Template-Matching---OpenCv\AMKOR_Weight_Measurement\AMKOR_Weight_Measurement\bin\Debug\AMKOR_Weight_Measurement.exe
+C:\Users\Admin\Desktop\Paul Projects\Template-Matching---OpenCv\AMKOR_Weight_Measurement\AMKOR_Weight_Measurement\bin\Debug\AMKOR_Weight_Measurement.pdb
+C:\Users\Admin\Desktop\Paul Projects\Template-Matching---OpenCv\AMKOR_Weight_Measurement\AMKOR_Weight_Measurement\bin\Debug\AMKOR_Weight_Measurement.xml
+C:\Users\Admin\Desktop\Paul Projects\Template-Matching---OpenCv\AMKOR_Weight_Measurement\AMKOR_Weight_Measurement\obj\Debug\AMKOR_Weight_Measurement.vbproj.AssemblyReference.cache
+C:\Users\Admin\Desktop\Paul Projects\Template-Matching---OpenCv\AMKOR_Weight_Measurement\AMKOR_Weight_Measurement\obj\Debug\AMKOR_Weight_Measurement.vbproj.SuggestedBindingRedirects.cache
+C:\Users\Admin\Desktop\Paul Projects\Template-Matching---OpenCv\AMKOR_Weight_Measurement\AMKOR_Weight_Measurement\obj\Debug\AMKOR_Weight_Measurement.Form1.resources
+C:\Users\Admin\Desktop\Paul Projects\Template-Matching---OpenCv\AMKOR_Weight_Measurement\AMKOR_Weight_Measurement\obj\Debug\AMKOR_Weight_Measurement.Resources.resources
+C:\Users\Admin\Desktop\Paul Projects\Template-Matching---OpenCv\AMKOR_Weight_Measurement\AMKOR_Weight_Measurement\obj\Debug\AMKOR_Weight_Measurement.Settings.resources
+C:\Users\Admin\Desktop\Paul Projects\Template-Matching---OpenCv\AMKOR_Weight_Measurement\AMKOR_Weight_Measurement\obj\Debug\AMKOR_Weight_Measurement.SettingsAccessPopUp.resources
+C:\Users\Admin\Desktop\Paul Projects\Template-Matching---OpenCv\AMKOR_Weight_Measurement\AMKOR_Weight_Measurement\obj\Debug\AMKOR_Weight_Measurement.vbproj.GenerateResource.cache
+C:\Users\Admin\Desktop\Paul Projects\Template-Matching---OpenCv\AMKOR_Weight_Measurement\AMKOR_Weight_Measurement\obj\Debug\AMKOR_Weight_Measurement.vbproj.CoreCompileInputs.cache
+C:\Users\Admin\Desktop\Paul Projects\Template-Matching---OpenCv\AMKOR_Weight_Measurement\AMKOR_Weight_Measurement\obj\Debug\AMKOR_Weight_Measurement.exe
+C:\Users\Admin\Desktop\Paul Projects\Template-Matching---OpenCv\AMKOR_Weight_Measurement\AMKOR_Weight_Measurement\obj\Debug\AMKOR_Weight_Measurement.xml
+C:\Users\Admin\Desktop\Paul Projects\Template-Matching---OpenCv\AMKOR_Weight_Measurement\AMKOR_Weight_Measurement\obj\Debug\AMKOR_Weight_Measurement.pdb

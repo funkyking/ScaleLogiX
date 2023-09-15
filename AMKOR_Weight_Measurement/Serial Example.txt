@@ -1,0 +1,135 @@
+    Private Sub SerialPort1_DataReceived(ByVal sender As Object, ByVal e As System.IO.Ports.SerialDataReceivedEventArgs) Handles SerialPort1.DataReceived
+        'If comOpen And cmdGetWeight.Text = "&Confirm" Then
+        SerialGapCount = SerialGapCount + 1
+        'If Com3Enable = 1 And SerialGapCount = SerialGap Then
+        ' SerialPort3.WriteLine(readBuffer)
+        ' SerialGapCount = 0
+        ' End If
+
+        If SerialGapCount > SerialGap Then SerialGapCount = 0
+
+
+        If comOpen And SerialGapCount = SerialGap Then
+            SerialGapCount = 0
+            Try
+                'byteEnd = SerialPort1.NewLine.ToCharArray
+
+                ' get number off bytes in buffer 
+                'Bytenumber = SerialPort1.BytesToRead
+
+                ' read one byte from buffer 
+                'ByteToRead = SerialPort1.ReadByte() 
+
+                ' read one char from buffer 
+                'CharToRead = SerialPort1.ReadChar() 
+
+                ' read until string "90" 
+                'readBuffer = SerialPort1.ReadTo(Chr(3))
+
+                If Scale = 1 Then
+                    'At POM
+                    readBuffer = SerialPort1.ReadTo(Chr(10))
+                ElseIf Scale = 2 Then
+                    'At Bunut 1
+                    readBuffer = SerialPort1.ReadTo(Chr(10))
+                ElseIf Scale = 3 Then
+                    'At Bunut 2
+                    readBuffer = SerialPort1.ReadTo(Chr(10))
+                ElseIf Scale = 4 Then
+                    'At Sawit
+                    readBuffer = SerialPort1.ReadTo(Chr(10))
+                ElseIf Scale = 5 Then
+                    'At NLFC Bagan Pasir
+                    readBuffer = SerialPort1.ReadTo(Chr(3))
+
+                End If
+
+
+                'At com1
+                'readBuffer = SerialPort1.ReadTo(Chr(10))
+
+
+
+                'readBuffer = SerialPort1.ReadExisting
+
+                ' read entire string until .Newline  
+                'readBuffer = SerialPort1.ReadLine()
+
+                'data to UI thread 
+                If Len(readBuffer) > 0 Then Me.Invoke(New EventHandler(AddressOf DoUpdate))
+                Application.DoEvents()
+
+            Catch ex As Exception
+                ' 'MsgBox("Read 1 : " & ex.Message)
+            End Try
+
+        End If
+
+        'If comOpen And SerialGapCount < SerialGap Then SerialPort1.DiscardInBuffer()
+
+    End Sub
+    Public Sub DoUpdate(ByVal sender As Object, ByVal e As System.EventArgs)
+        Try
+            If Com3Enable = 1 Then
+                SerialPort3.WriteLine(readBuffer)
+            End If
+
+
+            'If Len(readBuffer) > 0 Then lblWeight.Text = Mid(readBuffer, 3, InStr(readBuffer, "kg") - 3).Trim & " Kg"
+
+            'Rea Kaltim - Avery
+            'If Len(readBuffer) > 0 Then lblWeight.Text = Mid(readBuffer, 3, InStr(readBuffer, Chr(13)) - 3).Trim & " Kg"
+
+            'At com1
+            'If Len(readBuffer) > 0 Then lblWeight.Text = Mid(readBuffer, 7, InStr(readBuffer, "kg") - 7).Trim & " Kg"
+
+
+            If Scale = 1 Then
+                'POM Bakrie
+                If Len(readBuffer) > 0 Then lblWeightDisplay.Text = Mid(readBuffer, 4, InStr(readBuffer, Chr(13)) - 1).Trim & " Kg"
+            ElseIf Scale = 2 Then
+                'At Punut - Presica
+                If Len(readBuffer) > 0 Then lblWeightDisplay.Text = Mid(readBuffer, 8, InStr(readBuffer, "kg") - 9).Trim & " Kg"
+            ElseIf Scale = 3 Then
+                'At Punut - Dacin
+                If Len(readBuffer) > 0 Then lblWeightDisplay.Text = Mid(readBuffer, 3, InStr(readBuffer, "KG") - 3).Trim & " Kg"
+            ElseIf Scale = 4 Then
+                'At Sawit - ZM305
+                If Len(readBuffer) > 0 Then lblWeightDisplay.Text = Mid(readBuffer, 3, InStr(readBuffer, "99") - 3).Trim & " Kg"
+            ElseIf Scale = 5 Then
+                'At NLFC Bagan Pasir
+                If Len(readBuffer) > 0 Then lblWeightDisplay.Text = Mid(readBuffer, 3, InStr(readBuffer, "99") - 14).Trim & " Kg"
+
+            End If
+
+            If cmdGetWeight.Text = "&Confirm" Then
+                'If Len(readBuffer) > 0 Then txtRx.Text = Mid(readBuffer, 3, InStr(readBuffer, "kg") - 3).Trim
+                'at(com1)
+                'If Len(readBuffer) > 0 Then txtRx.Text = Mid(readBuffer, 7, InStr(readBuffer, "kg") - 7).Trim
+                If Scale = 1 Then
+                    'At POM Bakrie
+                    If Len(readBuffer) > 0 Then txtRx.Text = Mid(readBuffer, 4, InStr(readBuffer, Chr(13)) - 1).Trim
+                ElseIf Scale = 2 Then
+                    'At Punut - Presica
+                    If Len(readBuffer) > 0 Then txtRx.Text = Mid(readBuffer, 8, InStr(readBuffer, "kg") - 9).Trim
+                ElseIf Scale = 3 Then
+                    'At Punut - Dacin
+                    If Len(readBuffer) > 0 Then txtRx.Text = Mid(readBuffer, 3, InStr(readBuffer, "KG") - 3).Trim
+                ElseIf Scale = 4 Then
+                    'At Sawit - ZM305
+                    If Len(readBuffer) > 0 Then txtRx.Text = Mid(readBuffer, 3, InStr(readBuffer, "99") - 3).Trim
+                ElseIf Scale = 5 Then
+                    'At NLFC Bagan Pasir - 
+                    If Len(readBuffer) > 0 Then txtRx.Text = Mid(readBuffer, 3, InStr(readBuffer, "99") - 14).Trim
+
+                End If
+            End If
+
+            SerialPort1.DiscardInBuffer()
+
+        Catch ex As Exception
+            'MsgBox("Read 2 : " & ex.Message)
+            Me.txtRemark.Text = ex.Message
+        End Try
+
+    End Sub

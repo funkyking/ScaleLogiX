@@ -1,0 +1,283 @@
+Imports System.IO
+Imports System.Runtime.CompilerServices
+Imports System.Threading
+
+Public Class Form1
+
+
+    'Port Connection Indicator
+    Dim allPortsOpen As Boolean = False
+    Dim IsTxOpen As Boolean = False
+    Dim IsRxOpen As Boolean = False
+
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+
+        Try
+            loadValues()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
+    End Sub
+
+    Public Sub loadValues()
+
+        functions.loadConfig()
+
+        toPrint_Port.PortName = Variables.ComPortOut
+        toPrint_Port.BaudRate = Variables.BaudrateOut
+
+        fromScale_Port.PortName = Variables.ComPortIn
+        fromScale_Port.BaudRate = Variables.BaudrateIn
+
+        LoadLogsToDataGrid()
+    End Sub
+
+    'Open or Close Ports (Tx & Rx)
+    Private Sub togglePorts_btn_Click(sender As Object, e As EventArgs) Handles togglePorts_btn.Click
+        Try
+            If Not toPrint_Port.IsOpen Then
+                IsTxOpen = True
+                toPrint_Port.Open()
+            Else
+                IsTxOpen = False
+                toPrint_Port.Close()
+            End If
+
+            If Not fromScale_Port.IsOpen Then
+                IsRxOpen = True
+                fromScale_Port.Open()
+            Else
+                IsRxOpen = False
+                fromScale_Port.Close()
+            End If
+
+            If IsTxOpen AndAlso IsRxOpen Then
+                allPortsOpen = True
+            Else
+                allPortsOpen = False
+            End If
+
+            rxStatus_pbx.Image = If(IsRxOpen, My.Resources.check_Ok, My.Resources.Cancel_Icon)
+            txStatus_pbx.Image = If(IsTxOpen, My.Resources.check_Ok, My.Resources.Cancel_Icon)
+
+
+            togglePorts_btn.Image = If(toPrint_Port.IsOpen AndAlso fromScale_Port.IsOpen,
+                                               My.Resources.Onn_Icon, My.Resources.Off_Icon)
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+
+#Region "COM-Out (to Printer)"
+
+    Dim readBufferComOut As String = ""
+    Dim outputText1 As String = ""
+
+    ' Receive Data From Weighing Scale, Then Once it hits chr(4), it will send save to logging files and Send Data to Printer
+    Private Sub SerialPort1_DataReceived(sender As Object, e As IO.Ports.SerialDataReceivedEventArgs) Handles toPrint_Port.DataReceived
+        readBufferComOut = toPrint_Port.ReadExisting()
+
+        If Len(readBufferComOut) > 0 Then Me.Invoke(New EventHandler(AddressOf DoUpdateComOut))
+        Application.DoEvents()
+
+    End Sub
+
+    Private Sub DoUpdateComOut(sender As Object, e As EventArgs)
+        outputText1 += readBufferComOut
+
+        If readBufferComOut = Chr(4) Then
+            usReceiving_txtbx.Text += outputText1 'Receiving from Com-In (Rx)
+            LogWeightToFile(outputText1)
+            usSending_txtbx.Text = outputText1 'Sending to Com-Out (Tx)
+            readBufferComOut = "" ' Clear the read buffer for the next update
+            SendDataToPrinter()
+        End If
+    End Sub
+
+    Private Sub SendDataToPrinter()
+        printerReceiving_txtbx.Clear()
+        If toPrint_Port.IsOpen Then
+            toPrint_Port.Write(outputText1)
+        End If
+
+        outputText1 = ""
+    End Sub
+
+#End Region
+
+#Region "COM-In"
+
+    Dim readBufferComIN As String = ""
+    Dim outputText2 As String = ""
+
+    'DataReceive and DoUpdateComIN , temporarily acts as printer since we loop the in and out.
+    'It is still the Weighing Scale but temporarily Acting as the Printer's Port.
+    Private Sub SerialPort2_DataReceived(sender As Object, e As Ports.SerialDataReceivedEventArgs) Handles fromScale_Port.DataReceived
+        readBufferComIN = fromScale_Port.ReadExisting()
+
+        If Len(readBufferComIN) > 0 Then Me.Invoke(New EventHandler(AddressOf DoUpdateComIN))
+        Application.DoEvents()
+
+    End Sub
+
+    Private Sub DoUpdateComIN(sender As Object, e As EventArgs)
+        outputText2 += readBufferComIN
+
+        If readBufferComIN.Contains(Chr(4)) Then
+            printerReceiving_txtbx.Text += outputText2
+            'LogWeightToFile(outputText2)
+            readBufferComIN = "" ' Clear the read buffer for the next update
+            outputText2 = ""
+        End If
+    End Sub
+
+    'Basically this is the Weighing Scale and we are sending the data to the Pc(ComIN)
+    Private Sub sendDataCOM4_btn_Click(sender As Object, e As EventArgs) Handles sendDataCOM4_btn.Click
+        usReceiving_txtbx.Clear()
+        Dim Input As String = weightScale_txtbx.Text
+
+        If fromScale_Port.IsOpen Then
+            fromScale_Port.Write(Input)
+        End If
+    End Sub
+
+#End Region
+
+
+
+
+#Region "logging"
+
+
+    'Log Data To WeightFolder and LogFolder at [C:\GWWeight]
+    Private Sub LogWeightToFile(InputData As String)
+
+        ' Trim any leading and trailing non-printable characters
+        InputData = InputData.Trim(ControlChars.NullChar)
+
+        Dim startIndex As Integer = CInt(InputData.IndexOf("Net:") + "Net:".Length)
+        Dim endIndex As Integer = CInt(InputData.IndexOf("g", startIndex))
+
+        If startIndex >= 0 AndAlso endIndex >= 0 Then
+            Dim extractedValue As String = CType(InputData.Substring(startIndex, endIndex - startIndex).Trim(), String)
+            Dim csvline As String = ""
+
+
+            ' Create the Weight directory if it doesn't exist
+            If Not Directory.Exists(Variables.MaindirectoryPath) Then
+                'Directory.CreateDirectory(directoryPath)
+                MessageBox.Show("Weight Folder Created")
+            End If
+
+            ' Create the Log directory if it doesn't exist
+            If Not Directory.Exists(Variables.logDirectoryPath) Then
+                Directory.CreateDirectory(Variables.logDirectoryPath)
+                MessageBox.Show("Weight Log Folder Created")
+            End If
+
+            If Not Directory.Exists(Variables.csvLogDirectoryPath) Then
+                Directory.CreateDirectory(Variables.csvLogDirectoryPath)
+                MessageBox.Show("CSV format Weight Log Folder Created")
+            End If
+
+
+
+            ' If the Weight_log file exists, add data to newline; otherwise, create a new file
+            Using writelog As StreamWriter = New StreamWriter(Variables.logfilePath, True)
+
+                ' Remove the first and last characters
+                InputData = InputData.Substring(1, InputData.Length - 2)
+
+                ' Remove empty lines
+                Dim lines() As String = InputData.Split({vbCrLf}, StringSplitOptions.RemoveEmptyEntries)
+                Dim filteredData As String = String.Join(vbCrLf, lines)
+
+                ' Extract required values from specific lines
+                Dim dateLine As String = lines(0).Substring(lines(0).IndexOf(":") + 2)
+                Dim timeLine As String = lines(1).Substring(lines(1).IndexOf(":") + 2)
+                Dim idLine As String = lines(2).Substring(lines(2).IndexOf(":") + 2)
+                Dim netLine As String = lines(3).Substring(lines(3).IndexOf(":") + 2).Trim()
+
+
+                csvline = $"{dateLine},{timeLine},{idLine},{netLine}"
+
+
+                writelog.WriteLine("--------------------------")
+                writelog.Write(filteredData)
+                writelog.WriteLine()
+            End Using
+
+            Using writecsvlog As StreamWriter = New StreamWriter(Variables.csvLogFilePath, True)
+                writecsvlog.WriteLine(csvline)
+            End Using
+            LoadLogsToDataGrid() 'Update Datagrid With New Value
+
+
+            ' If the Weight file exists, overwrite it; otherwise, create a new file
+            Using writer As StreamWriter = New StreamWriter(Variables.WeightFilePath, False)
+                writer.Write(extractedValue)
+            End Using
+        End If
+    End Sub
+
+
+    'Updates the DataGridView Table
+    Public Sub LoadLogsToDataGrid()
+
+        DataGridView1.Rows.Clear()
+
+        ' Read all lines from the file
+        Dim lines() As String = File.ReadAllLines(Variables.csvLogFilePath)
+
+        ' Reverse the lines array to display the latest data first
+        Array.Reverse(lines)
+
+        ' Loop through the lines and split each line into columns
+        For Each line As String In lines
+            Dim columns() As String = line.Split(","c)
+            DataGridView1.Rows.Add(columns)
+        Next
+    End Sub
+
+#End Region
+
+
+
+    'Open Settings Menu
+    Private Sub settings_btn_Click(sender As Object, e As EventArgs) Handles settings_btn.Click
+        Dim stgsFrm As New Settings(Me) 'Pass instance of main form so that can effect changes on main form
+        stgsFrm.Show()
+    End Sub
+
+
+
+    Private Sub GenerateRandomEntry()
+        weightScale_txtbx.Clear() 'clear the textbox
+        Dim random As New Random()
+
+        Dim currentDate As String = DateTime.Now.ToString("MM/dd/yyyy")
+        Dim currentTime As String = DateTime.Now.ToString("hh:mm:ss")
+        Dim randomId As Integer = random.Next(1, 100)
+        Dim randomNet As Double = random.NextDouble() * 20 ' Generate a random number between 0 and 20
+
+        Dim entry As String = Chr(1) & vbCrLf &
+                          "   Date: " & currentDate & vbCrLf &
+                          "   Time: " & currentTime & vbCrLf &
+                          "   ID No: " & randomId.ToString() & vbCrLf &
+                          "   Net:    " & randomNet.ToString("0.000") & " g" & vbCrLf &
+                          Chr(4)
+
+        weightScale_txtbx.Text = entry
+        sendDataCOM4_btn_Click(sendDataCOM4_btn, EventArgs.Empty)
+
+    End Sub
+
+    'Random Input Generator
+    Private Sub random_Btn_Click(sender As Object, e As EventArgs) Handles random_Btn.Click
+        GenerateRandomEntry()
+    End Sub
+End Class

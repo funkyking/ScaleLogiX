@@ -1,0 +1,5 @@
+Project Title : AMKOR Weight Measurement
+
+Config file:
+1. Comport No, Baud Rate, Data Bits
+
