@@ -1,0 +1,2 @@
+Added Qr
+Data type = $"{r1.WorkOrder}, {r1.SubGroup}, {r1.PalletNo}, {r1.Shift}"

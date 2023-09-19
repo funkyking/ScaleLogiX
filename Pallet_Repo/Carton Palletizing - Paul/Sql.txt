@@ -1,0 +1,31 @@
+Database 
+UserId = 192.168.79.220;1443
+Password = adminFt@9979
+
+
+SELECT TOP 1000 [ID]
+      ,[ProductUnitID]
+      ,[StationTypeID]
+      ,[StationName]
+      ,[TestParaString]
+  FROM [Cricut_MES].[dbo].[TestResult]
+  WHERE TestParaString LIKE '%|Serial Number;D070923A2811|'
+
+
+
+
+'STEP 1
+SELECT TOP 1000 [ID]
+      ,[UnitSerialNumber]
+  FROM [Cricut_MES].[dbo].[ProductUnit]
+  WHERE UnitSerialNumber ='D230823A0424'
+
+'STEP 2
+SELECT TOP 1000 [ID]
+      ,[ProductUnitID]
+      ,[StationTypeID]
+      ,[StationName]
+      ,[TestParaString]
+  FROM [Cricut_MES].[dbo].[TestResult]
+  WHERE ProductUnitID='462120' AND StationName LIKE '%PRINTING3%'
+

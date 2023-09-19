@@ -1,0 +1,41 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+ShippingStation
+</name>
+</assembly>
+<members>
+<member name="T:ShippingStation.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:ShippingStation.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:ShippingStation.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="P:ShippingStation.My.Resources.Resources.Remove">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:ShippingStation.My.Resources.Resources.remove_32">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:ShippingStation.My.Resources.Resources.Remove1">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+</members>
+</doc>

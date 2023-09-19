@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DataSet1" targetNamespace="http://tempuri.org/DataSet1.xsd" xmlns:mstns="http://tempuri.org/DataSet1.xsd" xmlns="http://tempuri.org/DataSet1.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DataSet1" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DataSet1" msprop:Generator_UserDSName="DataSet1">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="WorkOrder" msprop:Generator_TableClassName="WorkOrderDataTable" msprop:Generator_TableVarName="tableWorkOrder" msprop:Generator_RowChangedName="WorkOrderRowChanged" msprop:Generator_TablePropName="WorkOrder" msprop:Generator_RowDeletingName="WorkOrderRowDeleting" msprop:Generator_RowChangingName="WorkOrderRowChanging" msprop:Generator_RowEvHandlerName="WorkOrderRowChangeEventHandler" msprop:Generator_RowDeletedName="WorkOrderRowDeleted" msprop:Generator_RowClassName="WorkOrderRow" msprop:Generator_UserTableName="WorkOrder" msprop:Generator_RowEvArgName="WorkOrderRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SerialNo" msprop:Generator_ColumnVarNameInTable="columnSerialNo" msprop:Generator_ColumnPropNameInRow="SerialNo" msprop:Generator_ColumnPropNameInTable="SerialNoColumn" msprop:Generator_UserColumnName="SerialNo" type="xs:string" minOccurs="0" />
+              <xs:element name="Carton" msprop:Generator_ColumnVarNameInTable="columnCarton" msprop:Generator_ColumnPropNameInRow="Carton" msprop:Generator_ColumnPropNameInTable="CartonColumn" msprop:Generator_UserColumnName="Carton" type="xs:string" minOccurs="0" />
+              <xs:element name="SerialNo2" msprop:Generator_ColumnVarNameInTable="columnSerialNo2" msprop:Generator_ColumnPropNameInRow="SerialNo2" msprop:Generator_ColumnPropNameInTable="SerialNo2Column" msprop:Generator_UserColumnName="SerialNo2" type="xs:string" minOccurs="0" />
+              <xs:element name="Carton2" msprop:Generator_ColumnVarNameInTable="columnCarton2" msprop:Generator_ColumnPropNameInRow="Carton2" msprop:Generator_ColumnPropNameInTable="Carton2Column" msprop:Generator_UserColumnName="Carton2" type="xs:string" minOccurs="0" />
+              <xs:element name="SerialNo3" msprop:Generator_ColumnVarNameInTable="columnSerialNo3" msprop:Generator_ColumnPropNameInRow="SerialNo3" msprop:Generator_ColumnPropNameInTable="SerialNo3Column" msprop:Generator_UserColumnName="SerialNo3" type="xs:string" minOccurs="0" />
+              <xs:element name="Carton3" msprop:Generator_ColumnVarNameInTable="columnCarton3" msprop:Generator_ColumnPropNameInRow="Carton3" msprop:Generator_ColumnPropNameInTable="Carton3Column" msprop:Generator_UserColumnName="Carton3" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

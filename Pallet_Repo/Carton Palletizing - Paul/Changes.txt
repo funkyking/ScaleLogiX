@@ -1,0 +1,9 @@
+-Added Qr Generation to [reprint()] method.
+
+-New Method [checkPalleteStatus()] method.
+>> 
+Checking The UnitSerialNumber (Serial Text Box Input) and if 
+TestResult.StationName column in the TestResult table contains
+[LIKE '%PRINTING3%'], which indicates if the table has finish the
+third Printing Station, thus if the value exist, its can Proceed,
+else the pallete is incomplete.
